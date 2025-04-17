@@ -1,6 +1,5 @@
 "use client"
 
-import Image from "next/image"
 import { useEffect, useState } from "react"
 import { useRouter } from 'next/navigation'
 
@@ -10,7 +9,7 @@ const getStatusProps = (status, files) => {
             return {
                 class: "upload-progress",
                 component: <>
-                    <img src="upload_progress.svg" key="progress" alt="upload_progress" className="fade-up w-28 mb-4" />
+                    <img src="/upload_progress.svg" key="progress" alt="upload_progress" className="fade-up w-28 mb-4" />
                     <p className="fade-up text-lg font-semibold">Uploading...</p>
                 </>
             }
@@ -18,7 +17,7 @@ const getStatusProps = (status, files) => {
             return {
                 class: "upload-success",
                 component: <>
-                    <img src="upload_success.svg" key="success" alt="upload_success" className="fade-up w-28 mb-4" />
+                    <img src="/upload_success.svg" key="success" alt="upload_success" className="fade-up w-28 mb-4" />
                     <p className="fade-up text-lg font-semibold mb-3">Uploaded</p>
                     {files && <p className="">{files.map(v => v.name).join(", ")}</p>}
                 </>
@@ -27,7 +26,7 @@ const getStatusProps = (status, files) => {
             return {
                 class: "border-gray-300 bg-gray-100/50",
                 component: <>
-                    <img src="upload.svg" alt="upload" className="w-28 mb-4" />
+                    <img src="/upload.svg" alt="upload" className="w-28 mb-4" />
                     <p className="text-lg font-semibold">Drag & Drop File</p>
                     <p className="text-lg mb-3">or Select File</p>
                     <p className="text-sm">Max Size: 100 MB</p>
@@ -63,26 +62,23 @@ export default function Home() {
 
     const uploadFiles = async () => {
         setSubmitStatus(true)
-        const form = new FormData();
-        form.append('filePRD', files.prd[0]);
-        for (const f in files.figma) {
-            form.append('filesFigma', f);
-        }
-        // TESTING ONLY
-        for (const value of formData.values()) {
-            console.log(value);
-        }
+        // const form = new FormData();
+        // form.append('filePRD', files.prd[0]);
+        // for (const f of files.figma) {
+        //     form.append('filesFigma', f);
+        // }
 
-        try {
-            const res = await fetch("/api/upload", { method: "POST", body: form });
-            const data = await res.json();
-            console.log(data);
-            if (data.uuid) {
-                router.push(`/task/${data.uuid}`)
-            }
-        } catch (error) {
-            console.error(error);
-        }
+        // try {
+        //     const res = await fetch("/api/upload", { method: "POST", body: form });
+        //     const data = await res.json();
+        //     console.log(data);
+        //     if (data.uuid) {
+        //         router.push(`/task/${data.uuid}`)
+        //     }
+        // } catch (error) {
+        //     console.error(error);
+        // }
+        setTimeout(()=>router.push(`/task/8e1a0183-a966-49f1-8c18-17e74ce3d444`),800)
     }
 
     // TESTING ONLY
@@ -101,7 +97,7 @@ export default function Home() {
                     <div className="w-full rounded-lg grid grid-cols-3 gap-x-3 py-4 px-12">
                         <div className="w-full space-x-3 flex items-center">
                             <div className="w-16 aspect-square bg-[#FA4EA9] rounded-full flex items-center justify-center p-4">
-                                <img src="types_images.svg" alt="types_images" className="w-full" />
+                                <img src="/types_images.svg" alt="types_images" className="w-full" />
                             </div>
                             <div className="flex flex-col">
                                 <p className="font-semibold text-gray-700">Images</p>
@@ -110,7 +106,7 @@ export default function Home() {
                         </div>
                         <div className="w-full space-x-3 flex items-center">
                             <div className="w-16 aspect-square bg-[#FA4EA9] rounded-full flex items-center justify-center p-4">
-                                <img src="types_gifs.svg" alt="types_gifs" className="w-full" />
+                                <img src="/types_gifs.svg" alt="types_gifs" className="w-full" />
                             </div>
                             <div className="flex flex-col">
                                 <p className="font-semibold text-gray-700">GIFs</p>
@@ -119,7 +115,7 @@ export default function Home() {
                         </div>
                         <div className="w-full space-x-3 flex items-center">
                             <div className="w-16 aspect-square bg-[#FA4EA9] rounded-full flex items-center justify-center p-3">
-                                <img src="types_videos.svg" alt="types_videos" className="w-full" />
+                                <img src="/types_videos.svg" alt="types_videos" className="w-full" />
                             </div>
                             <div className="flex flex-col">
                                 <p className="font-semibold text-gray-700">Videos</p>
@@ -140,12 +136,12 @@ export default function Home() {
                         >
                             {dragOverStatus.prd ? (
                                 <>
-                                    <img src="upload.svg" alt="upload" className="fade-up w-28 mb-4" />
+                                    <img src="/upload.svg" alt="upload" className="fade-up w-28 mb-4" />
                                     <p className="fade-up text-lg font-semibold">Drag & Drop File</p>
                                 </>
                             ) : (
                                 <>
-                                    <img src="upload_files.svg" alt="upload" className="w-32 mb-2 opacity-50" />
+                                    <img src="/upload_files.svg" alt="upload" className="w-32 mb-2 opacity-50" />
                                     {getStatusProps(uploadStatus.prd, files.prd).component}
                                 </>
                             )}
@@ -162,12 +158,12 @@ export default function Home() {
                         >
                             {dragOverStatus.figma ? (
                                 <>
-                                    <img src="upload.svg" alt="upload" className="fade-up w-28 mb-4" />
+                                    <img src="/upload.svg" alt="upload" className="fade-up w-28 mb-4" />
                                     <p className="fade-up text-lg font-semibold">Drag & Drop File</p>
                                 </>
                             ) : (
                                 <>
-                                    <img src="upload_files.svg" alt="upload" className="w-32 mb-2 opacity-50" />
+                                    <img src="/upload_files.svg" alt="upload" className="w-32 mb-2 opacity-50" />
                                     {getStatusProps(uploadStatus.figma, files.figma).component}
                                 </>
                             )}
