@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"
 import { deleteFiles } from "@/lib/openAI"
 
-export const GET = async (req, res) => {
+export const GET = async () => {
     try {
         const files = await deleteFiles()
         return NextResponse.json({ files, status: 200 })

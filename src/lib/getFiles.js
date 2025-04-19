@@ -1,8 +1,7 @@
 "use server"
-
 import { readdir } from "fs/promises"
 
-export default async function getFiles (uuid) {
+export default async function getFiles(uuid) {
     try {
         const regexPRD = new RegExp(`^${uuid}_prd.pdf$`, 'i');
         const regexFigma = new RegExp(`^${uuid}_figma_\\d+\\.(png|jpg|jpeg)$`, 'i');

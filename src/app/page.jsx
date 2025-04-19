@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { useRouter } from 'next/navigation'
+import uploadFiles from "@/lib/uploadFiles"
 
 const getStatusProps = (status, files) => {
     switch (status) {
@@ -60,25 +61,29 @@ export default function Home() {
         }
     }
 
-    const uploadFiles = async () => {
+    const uploadFilesClient = async () => {
         setSubmitStatus(true)
-        // const form = new FormData();
-        // form.append('filePRD', files.prd[0]);
-        // for (const f of files.figma) {
-        //     form.append('filesFigma', f);
-        // }
+        const form = new FormData();
+        form.append('filePRD', files.prd[0]);
+        for (const f of files.figma) {
+            form.append('filesFigma', f);
+        }
 
-        // try {
-        //     const res = await fetch("/api/upload", { method: "POST", body: form });
-        //     const data = await res.json();
-        //     console.log(data);
-        //     if (data.uuid) {
-        //         router.push(`/task/${data.uuid}`)
-        //     }
-        // } catch (error) {
-        //     console.error(error);
-        // }
-        setTimeout(()=>router.push(`/task/8e1a0183-a966-49f1-8c18-17e74ce3d444`),800)
+        try {
+            // const res = await fetch("/api/upload", { method: "POST", body: form });
+            const data = await uploadFiles(form);
+            console.log(data);
+            if (data.taskId) {
+                router.push(`/task/${data.taskId}`)
+            } else {
+                throw new Error(data.error)
+            }
+        } catch (error) {
+            console.error(error);
+        }
+
+        // // TESTING ONLY
+        // setTimeout(()=>router.push(`/task/8e1a0183-a966-49f1-8c18-17e74ce3d444`),800)
     }
 
     // TESTING ONLY
@@ -174,7 +179,7 @@ export default function Home() {
 
                 <input type="file" className="hidden" />
 
-                <button onClick={uploadFiles} className={`${!submitStatus ? "bg-[#FA4EA9]" : "progress"} cursor-pointer px-8 py-4 text-white font-semibold text-lg rounded-lg w-[251px]`}>
+                <button onClick={uploadFilesClient} className={`${!submitStatus ? "bg-[#FA4EA9]" : "progress"} cursor-pointer px-8 py-4 text-white font-semibold text-lg rounded-lg w-[251px]`}>
                     <span>{!submitStatus ? "Generate Test Cases" : "Generating..."}</span>
                 </button>
 

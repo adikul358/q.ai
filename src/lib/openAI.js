@@ -1,3 +1,4 @@
+"use server"
 import OpenAI from "openai"
 import ASSISTANTS from "./ASSISTANTS"
 import { createReadStream } from "fs"

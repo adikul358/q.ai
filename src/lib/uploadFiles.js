@@ -1,11 +1,9 @@
-// Import necessary modules
-import { NextResponse } from "next/server"
+"use server"
 import path from "path"
 import { writeFile } from "fs/promises"
 import { v4 as uuidv4 } from 'uuid'
 
-export const POST = async (req, res) => {
-    const formData = await req.formData()
+export default async function uploadFiles(formData) {
     const uuid = uuidv4()
     console.log(`Generated UUID ${uuid}`)
 
@@ -25,7 +23,7 @@ export const POST = async (req, res) => {
         console.log(`Saved PRD: /uploads/${filename}`)
     } catch (error) {
         console.log("Error occurred ", error)
-        return NextResponse.json({ Message: "Failed", status: 500 })
+        return { error }
     }
     
     // Handle Figma files
@@ -38,17 +36,17 @@ export const POST = async (req, res) => {
         for (const file of filesFigma) {
             buffer = Buffer.from(await file.arrayBuffer())
             filename = `${uuid}_figma_${i}${path.extname(file.name)}`
-            console.log(`Saving PRD File: ${filename}`)
+            console.log(`Saving Figma File: ${filename}`)
             await writeFile(
                 path.join(process.cwd(), "uploads/" + filename),
                 buffer
             )
+            console.log(`Saved Figma: /uploads/${filename}`)
             i++
         }
-        return NextResponse.json({ Message: "Success", status: 201, uuid })
+        return { taskId: uuid }
     } catch (error) {
         console.log("Error occurred ", error)
-        return NextResponse.json({ Message: "Failed", status: 500 })
+        return { error }
     }
-
 }

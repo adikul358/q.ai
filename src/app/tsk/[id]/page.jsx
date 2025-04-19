@@ -11,11 +11,11 @@ export default async function Page({ params }) {
     let prdUploadId = " ", figmaUploadIds = [" ", " "]
     let csvRuns = [], csvResponses = []
 
-    // TESTING ONLY
-    prdUploadId = "file-2yFF7te7p96nBWVwi15iAF"
-    figmaUploadIds = ["file-F9Vqu5jGR53xNDuopofJAZ", "file-Kub2wdaZBs2DMB49vKty1G", "file-4PCNy2FXdsrZucF8NPPn15"]
-    asstPRDAnalyser = {id: "asst_5F42krSmagT2ihX5jblxsCLV"}
-    asstCSVGenerator = {id: "asst_DSzHN7KxThbVV2WtVI2f3Wbp"}
+    // // TESTING ONLY
+    // prdUploadId = "file-2yFF7te7p96nBWVwi15iAF"
+    // figmaUploadIds = ["file-F9Vqu5jGR53xNDuopofJAZ", "file-Kub2wdaZBs2DMB49vKty1G", "file-4PCNy2FXdsrZucF8NPPn15"]
+    // asstPRDAnalyser = {id: "asst_5F42krSmagT2ihX5jblxsCLV"}
+    // asstCSVGenerator = {id: "asst_DSzHN7KxThbVV2WtVI2f3Wbp"}
 
     // Get assistant
     asstPRDAnalyser = await getAssistant("prd_analyser")
