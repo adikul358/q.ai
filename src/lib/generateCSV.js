@@ -6,7 +6,7 @@ const openai = new OpenAI()
 
 export default async function generateCSV(queries, files) {
     // Get assistant
-    const asstCSVGenerator = await getAssistant("prd_analyser")
+    const asstCSVGenerator = await getAssistant("csv_generator")
     console.log(asstCSVGenerator)
 
     const figmaUploadIds = await uploadFiles(files)
