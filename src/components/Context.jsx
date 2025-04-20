@@ -17,3 +17,17 @@ export const TaskContextProvider = ({children, value}) => {
         </TaskContext.Provider>
     )
 }
+export const UserContext = createContext({
+    email: "",
+    isSignedIn: false,
+    name: "",
+    avatarUrl: ""
+})
+
+export const UserContextProvider = ({children, value}) => {
+    return (
+        <UserContext.Provider value={value}>
+            {children}
+        </UserContext.Provider>
+    )
+}

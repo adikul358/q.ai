@@ -1,4 +1,4 @@
-import { TaskContextProvider } from "@/components/TaskContext";
+import { TaskContextProvider } from "@/components/Context";
 import getFiles from "@/lib/getFiles";
 
 export default async function TaskLayout({ children, params }) {

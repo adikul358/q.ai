@@ -1,7 +1,7 @@
 "use server"
 import { writeFile, stat } from "fs/promises"
 
-export default async function saveCSV(csvData, taskId) {
+export async function saveCSV(csvData, taskId) {
     const csvHeader = "Test case id,Title,Description,Pre-conditions,Test steps,Expected results,ETA,Priority,Test type,Env,Screen,Verified,Category"
     let csvRes = `${csvHeader}\n`
     for (const c of csvData) {
@@ -20,6 +20,18 @@ export default async function saveCSV(csvData, taskId) {
     try {
         await writeFile(pathname, csvRes, 'utf8')
         const sizeBytes = (await stat(pathname)).size;
+        return {name: filename, url: `/${filename}`, size: sizeBytes}
+    } catch (err) {
+        console.log(err)
+    }
+}
+export async function getCSV(taskId) {
+    const filename = `test_cases_${taskId}.csv`
+    const pathname = `public/${filename}`
+
+    try {
+        const sizeBytes = (await stat(pathname)).size;
+        console.log({name: filename, url: `/${filename}`, size: sizeBytes})
         return {name: filename, url: `/${filename}`, size: sizeBytes}
     } catch (err) {
         console.log(err)

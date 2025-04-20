@@ -64,7 +64,7 @@ export default function Home() {
     const uploadFilesClient = async () => {
         setSubmitStatus(true)
         const form = new FormData();
-        form.append('filePRD', files.prd[0]);
+        form.   append('filePRD', files.prd[0]);
         for (const f of files.figma) {
             form.append('filesFigma', f);
         }
