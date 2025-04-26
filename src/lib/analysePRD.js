@@ -45,7 +45,13 @@ export default async function analysePRD(file) {
 
     // Process JSON
     const queries = []
-    const { test_areas, ...suppInfo } = JSON.parse(prdRes.substring(8, prdRes.length-4))
+    const start = prdRes.indexOf('{');
+    const end = prdRes.lastIndexOf('}');
+    if (start === -1 || end === -1 || start > end) {
+      throw new Error('No valid JSON block found.');
+    }
+    const jsonString = prdRes.slice(start, end + 1);
+    const { test_areas, ...suppInfo } = JSON.parse(jsonString)
     let i = 1
     for (const t of test_areas) {
         const query = `${JSON.stringify({test_area: t, ...suppInfo}, null, 2)}\n\nGenerate test cases from this information and the given Image, give the data in csv format.`

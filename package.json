@@ -19,6 +19,7 @@
     "next-auth": "^4.24.11",
     "openai": "^4.93.0",
     "papaparse": "^5.5.2",
+    "pg": "^8.15.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-loader-spinner": "^6.1.6",

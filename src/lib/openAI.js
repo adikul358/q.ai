@@ -1,7 +1,8 @@
 "use server"
 import OpenAI from "openai"
 import ASSISTANTS from "./ASSISTANTS"
-import { createReadStream } from "fs"
+import { createReadStream, readdir, stat, unlink } from "fs"
+import path from "path"
 
 const openai = new OpenAI()
 
@@ -44,12 +45,41 @@ export const uploadFiles = async (files) => {
 }
 
 export const deleteFiles = async () => {
+    const res = {local: [], openai: []}
+
+    readdir("uploads", (err, files) => {
+        if (err) {
+            console.error('Error reading directory:', err);
+            return;
+        }
+
+        files.forEach(file => {
+            const filePath = path.join("uploads", file);
+
+            stat(filePath, (err, stats) => {
+                if (err) {
+                    console.error('Error stating file:', err);
+                    return;
+                }
+
+                if (stats.isFile()) {
+                    unlink(filePath, err => {
+                        if (err) {
+                            console.error('Error deleting file:', err);
+                        } else {
+                            res.local.push(file)
+                        }
+                    });
+                }
+            });
+        });
+    });
+
     const list = await openai.files.list();
-    const res = []
 
     for await (const f of list) {
         const file = await openai.files.del(f.id);
-        res.push(file)
+        res.openai.push(file)
     }
 
     return res

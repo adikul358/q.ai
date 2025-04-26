@@ -14,7 +14,8 @@ export default async function generateCSV(queries, files) {
     // Run csv_generator
     const csvRuns = []
     const csvResponses = []
-    for (const q of queries.slice(0,2)) {
+    // for (const q of queries.slice(0,2)) {
+    for (const q of queries) {
         const thread = await openai.beta.threads.create();
         const message = await openai.beta.threads.messages.create(
             thread.id,
