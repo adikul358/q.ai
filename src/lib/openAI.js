@@ -46,15 +46,17 @@ export const uploadFiles = async (files) => {
 
 export const deleteFiles = async () => {
     const res = {local: [], openai: []}
+    const localDir = path.resolve(process.cwd(), 'uploads')
+    console.log({localDir})
 
-    readdir("uploads", (err, files) => {
+    readdir(localDir, (err, files) => {
         if (err) {
             console.error('Error reading directory:', err);
             return;
         }
 
         files.forEach(file => {
-            const filePath = path.join("uploads", file);
+            const filePath = path.join(localDir, file);
 
             stat(filePath, (err, stats) => {
                 if (err) {
