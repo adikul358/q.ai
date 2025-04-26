@@ -1,11 +1,21 @@
 "use server"
 import path from "path"
-import { writeFile } from "fs/promises"
+import { writeFile, mkdir } from "fs/promises"
 import { v4 as uuidv4 } from 'uuid'
 
 export default async function uploadFiles(formData) {
     const uuid = uuidv4()
     console.log(`Generated UUID ${uuid}`)
+
+    
+    // Create uploads directory
+    const uploadsDir = path.join(process.cwd(), 'uploads');
+    try {
+      await mkdir(uploadsDir);
+      console.log('Uploads directory is ready. ' + uploadsDir);
+    } catch (err) {
+      console.error('Failed to create uploads directory:', err.message);
+    }
 
     // Handle PRD File
     const filePRD = formData.get("filePRD")
