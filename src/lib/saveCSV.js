@@ -1,4 +1,5 @@
 "use server"
+import path from "path";
 import { writeFile, stat } from "fs/promises"
 import Papa from "papaparse";
 
@@ -30,18 +31,18 @@ export async function saveCSV(csvData, taskId) {
     const serialisedCSV = Papa.unparse(serialisedData)
 
     const filename = `test_cases_${taskId}.csv`
-    const pathname = `public/csv/${filename}`
+    const pathname = path.resolve(process.cwd(), `public/csv/${filename}`)
     try {
         await writeFile(pathname, serialisedCSV, 'utf8')
         const sizeBytes = (await stat(pathname)).size;
-        return { name: filename, url: `/${filename}`, size: sizeBytes }
+        return { name: filename, url: `/csv/${filename}`, size: sizeBytes }
     } catch (err) {
         console.log(err)
     }
 }
 export async function getCSV(taskId) {
     const filename = `test_cases_${taskId}.csv`
-    const pathname = `public/csv/${filename}`
+    const pathname = path.resolve(process.cwd(), `public/csv/${filename}`)
 
     try {
         const sizeBytes = (await stat(pathname)).size;

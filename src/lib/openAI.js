@@ -27,7 +27,7 @@ export const getAssistant = async (name) => {
 export const uploadFiles = async (files) => {
     const res = []
     for (let f of files) {
-        f = `uploads/${f}`
+        f = path.resolve(process.cwd(), `uploads/${f}`)
         try {
             const file = await openai.files.create({
                 file: createReadStream(f),
